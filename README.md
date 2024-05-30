@@ -1,47 +1,37 @@
-<h1 align="center">
-  <!-- <img src=".github/logo.png" alt="Quickemu" /> -->
-  <br />
-  Desktopify
-</h1>
+Here's the entire content formatted as Markdown:
 
-# This project is discontinued ☠️
+```markdown
+<h1 align="center">Desktopify</h1>
 
-**This project initially served as a PoC for bringing [Ubuntu Desktop to Raspberry Pi](https://www.omgubuntu.co.uk/2020/10/ubuntu-20-10-raspberry-pi-4-desktop) when I worked at [Canonical](https://canonical.com/). Now that [Raspberry Pi is a release target for Ubuntu Desktop](https://ubuntu.com/download/raspberry-pi), this project has no purpose.** 
+## Convert Ubuntu Server for Raspberry Pi to a Desktop
 
-<p align="center"><b>Convert Ubuntu Server for Raspberry Pi to a Desktop.</b></p>
-<!-- <div align="center"><img src=".github/screenshot.png" alt="Quickemu Screenshot" /></div> -->
-<p align="center">Made with 💝 for <img src=".github/ubuntu.png" align="top" width="18" /></p>
+Desktopify is a versatile script to convert [Ubuntu Server for the Raspberry Pi](https://ubuntu.com/download/raspberry-pi) to one of the official Ubuntu desktop flavours.
 
 ## Introduction
 
-Desktopify is a simple script to convert
-[Ubuntu Server for the Raspberry Pi](https://ubuntu.com/download/raspberry-pi)
-to one of the official Ubuntu desktop flavours.
-
-We have a Discord for this project: [![Discord](https://img.shields.io/discord/712850672223125565?color=0C306A&label=WimpysWorld%20Discord&logo=Discord&logoColor=ffffff&style=flat-square)](https://discord.gg/hy7uZfX)
-
-[![Raspberry Pi 4 8GB - Install Ubuntu Desktop 20.04 LTS](https://img.youtube.com/vi/umtZuUJOU38/0.jpg)](https://www.youtube.com/watch?v=umtZuUJOU38)
+Desktopify helps in setting up a full Ubuntu Desktop environment on a Raspberry Pi. Initially created as a proof of concept, it has now evolved to support multiple Ubuntu desktop flavours.
 
 ## Installation
 
-  * Put an [Ubuntu Server image for Raspberry Pi](https://ubuntu.com/download/raspberry-pi) on a SDHC card.
-  * Boot the Ubuntu Server SDHC on a Raspberry Pi 2, 3 or 4.
-  * Login to the Raspberry Pi; username `ubuntu` and password `ubuntu`
-      * You will be prompted to change the password
-  * Clone the project
-    * `git clone https://github.com/wimpysworld/desktopify.git`
-  * Change your current directory to desktopify directory
-    * `cd desktopify`
-  * Convert the server to a desktop
-    * `sudo ./desktopify --de ubuntu-mate`
+1. Download an [Ubuntu Server image for Raspberry Pi](https://ubuntu.com/download/raspberry-pi) and write it to an SDHC card.
+2. Boot the Ubuntu Server SDHC on a Raspberry Pi 2, 3, or 4.
+3. Log in to the Raspberry Pi using:
+   - Username: `ubuntu`
+   - Password: `ubuntu`
+   - You will be prompted to change the password.
+4. Clone the project:
+   ```sh
+   git clone https://github.com/wimpysworld/desktopify.git
+   cd desktopify
+   sudo ./desktopify --de ubuntu-mate
+   ```
 
-### Usage
+## Usage
 
-```
-Usage
-  ./desktopify --de <desktop environment>
+```sh
+./desktopify --de <desktop environment>
 
-Available desktop environments are
+Available desktop environments:
   lubuntu
   kubuntu
   ubuntu
@@ -51,37 +41,88 @@ Available desktop environments are
   ubuntu-studio
   xubuntu
 
-You can also pass the optional --oem option which will run a setup
-wizard on the next boot.
+You can also pass the optional --oem option which will run a setup wizard on the next boot.
+Use --uninstall to remove the currently installed desktop environment.
 ```
 
-## TODO
+## Features and Functions
 
-- [ ] Emoji status
+### Install Desktop Environment
 
-## DONE
+Installs the specified desktop environment:
+```sh
+sudo ./desktopify --de ubuntu-mate
+```
 
-- [x] Install GPIO utilities and libraries
-- [x] Enable Bluetooth
-- [x] Make sure it's Ubuntu on a Pi
-- [x] Make Network Manager the default backend
-- [x] Prevent low power WiFi mode
-- [x] Disable overscan
-- [x] Enable fkms driver
-- [x] Enable boot splash
-- [x] Enable Firefox hardware acceleration
-- [x] Create a snap
-- [x] Kubuntu
-- [x] Lubuntu
-- [x] Ubuntu
-- [x] Ubuntu Budgie
-- [x] Ubuntu Kylin
-- [x] Ubuntu MATE
-- [x] Ubuntu Studio
-- [x] Xubuntu
-- [x] Drop `dpkg-architecture` requirement
-- [x] Optimise Ubuntu MATE (Marco) window manager
-- [x] Enable initial setup
-- [x] Prevent pointless re-installs
-- [x] Install snaps
-- [x] Install gpio tools
+### Uninstall Desktop Environment
+
+Uninstalls the currently installed desktop environment:
+```sh
+sudo ./desktopify --uninstall
+```
+
+### OEM Setup
+
+Runs an OEM setup wizard on the next boot:
+```sh
+sudo ./desktopify --de ubuntu-mate --oem
+```
+
+## Improvements and Achievements
+
+- Installed GPIO utilities and libraries
+- Enabled Bluetooth
+- Made Network Manager the default backend
+- Prevented low power WiFi mode
+- Disabled overscan
+- Enabled fkms driver
+- Enabled boot splash
+- Enabled Firefox hardware acceleration
+- Created a snap package
+- Supported desktop environments:
+  - Kubuntu
+  - Lubuntu
+  - Ubuntu
+  - Ubuntu Budgie
+  - Ubuntu Kylin
+  - Ubuntu MATE
+  - Ubuntu Studio
+  - Xubuntu
+- Optimized Ubuntu MATE (Marco) window manager
+- Enabled initial setup
+- Prevented pointless re-installs
+- Installed snaps
+- Installed gpio tools
+
+## Code Overview
+
+### Main Functions
+
+- `install_desktop_environment()`: Installs the specified desktop environment.
+- `uninstall_desktop_environment()`: Uninstalls the currently installed desktop environment.
+- `apply_tweaks()`: Applies specific tweaks for the installed desktop environment.
+- `configure_network()`: Configures network settings and disables WiFi power saving.
+- `display_menu()`: Displays a menu for selecting the desktop environment.
+
+### Example Commands
+
+Install Ubuntu MATE with OEM setup:
+```sh
+sudo ./desktopify --de ubuntu-mate --oem
+```
+
+Uninstall the current desktop environment:
+```sh
+sudo ./desktopify --uninstall
+```
+
+## Contribution
+
+Feel free to contribute to the project by submitting issues or pull requests on [GitHub](https://github.com/wimpysworld/desktopify).
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+```
+
+You can copy and paste this entire block into your README.md file on GitHub. If you need any further adjustments, let me know.
