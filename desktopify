@@ -4,8 +4,9 @@ set -euo pipefail
 # Display help usage
 function usage() {
   echo
-  echo "Usage"
+  echo "Usage:"
   echo "  $0 --de <desktop environment>"
+  echo "  $0 --uninstall"
   echo
   echo "Available desktop environments are:"
   echo "  lubuntu"
@@ -19,6 +20,7 @@ function usage() {
   echo
   echo "You can also pass the optional --oem option which will run a setup"
   echo "wizard on the next boot."
+  echo "Use --uninstall to remove the currently installed desktop environment."
 }
 
 # Install the specified desktop environment
@@ -63,6 +65,37 @@ function install_desktop_environment() {
       exit 1
       ;;
   esac
+}
+
+# Uninstall the currently installed desktop environment
+function uninstall_desktop_environment() {
+  local detected_environment=""
+
+  if dpkg-query -l lubuntu-desktop &> /dev/null; then
+    detected_environment="lubuntu-desktop"
+  elif dpkg-query -l kubuntu-desktop &> /dev/null; then
+    detected_environment="kubuntu-desktop"
+  elif dpkg-query -l ubuntu-desktop &> /dev/null; then
+    detected_environment="ubuntu-desktop"
+  elif dpkg-query -l ubuntu-budgie-desktop &> /dev/null; then
+    detected_environment="ubuntu-budgie-desktop"
+  elif dpkg-query -l ubuntukylin-desktop &> /dev/null; then
+    detected_environment="ubuntukylin-desktop"
+  elif dpkg-query -l ubuntu-mate-desktop &> /dev/null; then
+    detected_environment="ubuntu-mate-desktop"
+  elif dpkg-query -l ubuntustudio-desktop &> /dev/null; then
+    detected_environment="ubuntustudio-desktop"
+  elif dpkg-query -l xubuntu-desktop &> /dev/null; then
+    detected_environment="xubuntu-desktop"
+  else
+    echo "No recognized desktop environment installed."
+    exit 1
+  fi
+
+  echo "Detected desktop environment: ${detected_environment}"
+  apt-get remove --purge -y "${detected_environment}"
+  apt-get autoremove --purge -y
+  echo "[+] Uninstallation of ${detected_environment} complete."
 }
 
 # Apply specific tweaks for the desktop environment
@@ -156,25 +189,58 @@ EOM
   fi
 }
 
+# Display a menu for selecting the desktop environment
+function display_menu() {
+  echo "Please select a desktop environment to install:"
+  echo "1) lubuntu"
+  echo "2) kubuntu"
+  echo "3) ubuntu"
+  echo "4) ubuntu-budgie"
+  echo "5) ubuntu-kylin"
+  echo "6) ubuntu-mate"
+  echo "7) ubuntu-studio"
+  echo "8) xubuntu"
+  echo "9) Exit"
+  read -p "Enter the number of your choice: " choice
+
+  case $choice in
+    1) desktop_environment="lubuntu" ;;
+    2) desktop_environment="kubuntu" ;;
+    3) desktop_environment="ubuntu" ;;
+    4) desktop_environment="ubuntu-budgie" ;;
+    5) desktop_environment="ubuntu-kylin" ;;
+    6) desktop_environment="ubuntu-mate" ;;
+    7) desktop_environment="ubuntu-studio" ;;
+    8) desktop_environment="xubuntu" ;;
+    9) echo "Exiting..."; exit 0 ;;
+    *) echo "Invalid choice, exiting..."; exit 1 ;;
+  esac
+}
+
 # Main function to parse arguments and execute necessary functions
 function main() {
   local desktop_environment=""
   local oem_setup=false
+  local uninstall=false
 
   # Parse command line arguments
   while [[ "$#" -gt 0 ]]; do
     case $1 in
       --de) desktop_environment="$2"; shift ;;
       --oem) oem_setup=true ;;
+      --uninstall) uninstall=true ;;
       *) echo "Unknown parameter passed: $1"; usage; exit 1 ;;
     esac
     shift
   done
 
+  if [[ "${uninstall}" == true ]]; then
+    uninstall_desktop_environment
+    exit 0
+  fi
+
   if [[ -z "${desktop_environment}" ]]; then
-    echo "Error: No desktop environment specified."
-    usage
-    exit 1
+    display_menu
   fi
 
   # Install the specified desktop environment
