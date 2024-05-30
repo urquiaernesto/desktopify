@@ -1,6 +1,3 @@
-Here's the entire content formatted as Markdown:
-
-
 <h1 align="center">Desktopify</h1>
 
 ## Convert Ubuntu Server for Raspberry Pi to a Desktop
@@ -21,9 +18,10 @@ Desktopify helps in setting up a full Ubuntu Desktop environment on a Raspberry 
    - You will be prompted to change the password.
 4. Clone the project:
    ```sh
-   git clone https://github.com/wimpysworld/desktopify.git
+   git clone https://github.com/urquiaernesto/desktopify.git
    cd desktopify
    sudo ./desktopify --de ubuntu-mate
+
 
 
 ## Usage
